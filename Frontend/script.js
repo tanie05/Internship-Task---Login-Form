@@ -6,6 +6,18 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     var password = document.getElementById('password').value;
 
     
+    function ValidateEmail(input) {
+  
+      var validRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  
+      if(input.match(validRegex) !== null){
+        return true;
+      }else{
+        alert("Invalid email address");
+        return false;
+      }
+  
+    }
     if(ValidateEmail(email)){
       // window.location.href = 'http://localhost:3000/'; 
       
@@ -15,20 +27,29 @@ document.getElementById('login-form').addEventListener('submit', function(event)
       }
       
 
-      try {
-        const response =  fetch("http://localhost:5000/login", {
+      fetch("http://localhost:5000/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
+        }).then(response => response.json())
+        .then(data => {
+          //On successful of login
+          if(!success){
+            throw new Error(data.error);
+          }
+          if(data.change){
+            alert('Change your password');
+          }
+          else {
+            alert('Logged In');
+          }
+        })
+        .catch(error => {
+          console.error('Error sending data:', error);
+          document.getElementById('error-message').textContent = 'Some error occurred';
         });
-    
-        const result =  response;
-        console.log("Success:", result);
-      } catch (error) {
-        console.error("Error:", error);
-      }
 
 
     }else{
@@ -38,19 +59,38 @@ document.getElementById('login-form').addEventListener('submit', function(event)
   });
   
 
-  function sendData(){
+  
+
+
+//   event.preventDefault();
+//   var username = document.getElementById('username').value;
+//   var password = document.getElementById('password').value;
+//   // Make a POST request to the Node.js server
+//   fetch('http://10.181.22.152:3000/login', {
+//     method: 'POST',
     
-  }
-  function ValidateEmail(input) {
+//     headers: {
+//       'Content-Type': 'application/json',
+      
+//     },
+//     body: JSON.stringify({ email: username, password: password }),
+//   })
+//     .then(response => response.json())
+//     .then(data => {
+//       //On successful of login
+//       if(data.change){
+//         alert('Change your password');
+//       }
+//       else {
+//         alert('Logged In');
+//       }
+//     })
+//     .catch(error => {
+//       console.error('Error sending data:', error);
+//       document.getElementById('error-message').textContent = 'Some error occurred';
+//     });
+  
+// });
 
-    var validRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-    if(input.match(validRegex) !== null){
-      return true;
-    }else{
-      alert("Invalid email address");
-      return false;
-    }
-
-  }
-
+  
