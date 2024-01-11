@@ -7,7 +7,30 @@ document.getElementById('login-form').addEventListener('submit', function(event)
 
     
     if(ValidateEmail(email)){
-      window.location.href = 'http://localhost:3000/'; 
+      // window.location.href = 'http://localhost:3000/'; 
+      
+      const data = {
+        email: email,
+        password: password
+      }
+      
+
+      try {
+        const response =  fetch("http://localhost:5000/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+    
+        const result =  response;
+        console.log("Success:", result);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+
+
     }else{
       document.getElementById('error-message').textContent = 'Invalid email';
     }
@@ -15,6 +38,9 @@ document.getElementById('login-form').addEventListener('submit', function(event)
   });
   
 
+  function sendData(){
+    
+  }
   function ValidateEmail(input) {
 
     var validRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
