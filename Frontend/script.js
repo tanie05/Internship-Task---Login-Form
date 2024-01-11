@@ -1,16 +1,27 @@
 document.getElementById('login-form').addEventListener('submit', function(event) {
-  event.preventDefault();
-  var username = document.getElementById('username').value;
-  var password = document.getElementById('password').value;
-  // Make a POST request to the Node.js server
-  fetch('http://10.181.22.152:3000/login', {
+    event.preventDefault();
+    
+    
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+
+    
+    if(ValidateEmail(email)){
+      // window.location.href = 'http://localhost:3000/'; 
+      
+      const data = {
+        email: email,
+        password: password
+      }
+      // Make a POST request to the Node.js server
+  fetch('http://localhost:5000/login', {
     method: 'POST',
     
     headers: {
       'Content-Type': 'application/json',
       
     },
-    body: JSON.stringify({ email: username, password: password }),
+    body: JSON.stringify({ email: email, password: password }),
   })
     .then(response => response.json())
     .then(data => {
@@ -24,14 +35,34 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     })
     .catch(error => {
       console.error('Error sending data:', error);
-      document.getElementById('error-message').textContent = 'Some error occurred';
+      document.getElementById('error-message').textContent = 'Invalid username or password';
+  
     });
-  if (username === 'intern' && password === 'training123') {
-    window.location.href = 'http://localhost:3000/';
-  } else {
-    document.getElementById('error-message').textContent = 'Invalid username or password';
+
+      
+  });
+  
+
+ 
+  function ValidateEmail(input) {
+
+    var validRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    if(input.match(validRegex) !== null){
+      return true;
+    }else{
+      alert("Invalid email address");
+      return false;
+    }
+
   }
-});
+
+
+  
+  
+  
+    
+
 
 
   

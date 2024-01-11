@@ -5,15 +5,32 @@ const bodyparser = require('body-parser');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = 3000; // You can change the port number if needed
+const port = 5000; // You can change the port number if needed
 
-app.use(bodyparser.urlencoded({ extended: true }))
-app.use(bodyparser.json())
-app.use(cors())
+
+app.use(cors({origin: true, credentials: true}));
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
+
+
+function ValidateEmail(input) {
+
+  var validRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+  if(input.match(validRegex) !== null){
+    return true;
+  }else{
+    alert("Invalid email address");
+    return false;
+  }
+
+}
+
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 const db = mysql.createConnection({
   host: 'localhost',
@@ -32,6 +49,9 @@ app.post('/login', (req, res)=>{
   
   const {email, password} = req.body;
   console.log(email, password);
+  if()
+
+
   const sql ='SELECT login_count from user2 where email = ? and password = ?';
   db.query(sql, [email, password], (err , result)=>{
     if(err) throw err;
@@ -55,6 +75,8 @@ app.post('/login', (req, res)=>{
 //     console.log(`Received username: ${username}, password: ${password}`);
 //     res.send('Login successful');
 //   });
+
+
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
