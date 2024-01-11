@@ -25,11 +25,11 @@ document.getElementById('login-form').addEventListener('submit', function(event)
         document.getElementById('error-message').textContent = 'Some error occurred';
       });
     
-    // if (username === 'intern' && password === 'training123') {
-    //   window.location.href = 'http://localhost:3000/'; 
-    // } else {
-    //   document.getElementById('error-message').textContent = 'Invalid username or password';
-    // }
+    if (username === 'intern' && password === 'training123') {
+      window.location.href = 'http://localhost:3000/'; 
+    } else {
+      document.getElementById('error-message').textContent = 'Invalid username or password';
+    }
   });
 
   
