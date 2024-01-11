@@ -49,7 +49,9 @@ app.post('/login', (req, res)=>{
   
   const {email, password} = req.body;
   console.log(email, password);
-  if()
+  if(ValidateEmail(email) === false){
+    res.send("Invalid Email")
+  }
 
 
   const sql ='SELECT login_count from user2 where email = ? and password = ?';
@@ -70,11 +72,6 @@ app.post('/login', (req, res)=>{
   })
 })
 
-// app.post('/login', (req, res) => {
-//     const { username, password } = req.body;
-//     console.log(`Received username: ${username}, password: ${password}`);
-//     res.send('Login successful');
-//   });
 
 
 
