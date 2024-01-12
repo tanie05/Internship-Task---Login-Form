@@ -21,6 +21,9 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     })
     .then(response => response.json())
     .then(data => {
+      if(!data.success){
+        throw new Error(data.error)
+      }
       //On successful of login
       if(data.change){
         alert('Change your password');

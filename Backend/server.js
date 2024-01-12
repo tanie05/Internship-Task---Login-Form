@@ -1,8 +1,6 @@
 const express = require('express');
 const mysql = require('mysql')
 const cors = require('cors');
-const bodyparser = require('body-parser');
-const bodyParser = require('body-parser');
 
 const app = express();
 const port = 5000; // You can change the port number if needed
@@ -45,12 +43,13 @@ db.connect(function(err) {
   // let sql = "INSERT INTO customers (name, ÷address) VALUES ('Company Inc', 'Highway 37')";
 });
 
-app.post('/login', (req, res)=>{
+app.post('/login', (req, res, next)=>{
   
   const {email, password} = req.body;
   console.log(email, password);
   if(ValidateEmail(email) === false){
-    res.send("Invalid Email")
+    res.status(200).send({success: true, error: "Invalid Email"});
+    next();
   }
 
 
